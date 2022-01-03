@@ -1,0 +1,54 @@
+header {
+    padding: 1em;
+    background-color: lightcyan;
+}
+nav {
+    display: flex;
+    justify-content: space-between;
+}
+nav button {
+    background-color: gray;
+    padding: .3em 1em;
+    border: 0;
+    border-radius: 5px;
+}
+
+table {
+}
+
+td {
+    background-color: rgb(148, 130, 109);
+    width: 75px;
+    height: 75px;
+    text-align: left;
+}
+
+.null {
+    background-color: antiquewhite
+}
+
+.active {
+    box-shadow: 0 0 10px 5px blue;
+}
+
+.redPiece, .blackPiece {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: block;
+    margin-left: 12px;
+    text-align: center;
+    color: white;
+}
+
+.redPiece {
+    background-color: rgb(129, 26, 26);
+}
+
+.blackPiece {
+    background-color: rgb(2, 2, 2);
+}
+
+#active {
+    box-shadow: 0 0 10px 5px blue;
+}

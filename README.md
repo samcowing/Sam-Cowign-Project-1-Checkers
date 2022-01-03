@@ -1,6 +1,4 @@
 # Sam-Cowign-Project-1-Checkers
- 
-# Sam-Cowign-Project-1-Checkers
 Planning 
 1. Structure
 2. Making the board
