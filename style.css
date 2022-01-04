@@ -1,13 +1,13 @@
 header {
     padding: 1em;
-    background-color: lightcyan;
 }
+
 nav {
     display: flex;
     justify-content: space-between;
 }
+
 nav button {
-    background-color: gray;
     padding: .3em 1em;
     border: 0;
     border-radius: 5px;
@@ -21,15 +21,13 @@ td {
     width: 75px;
     height: 75px;
     text-align: left;
+    border: 2px solid gray
 }
 
 .null {
     background-color: antiquewhite
 }
 
-.active {
-    box-shadow: 0 0 10px 5px blue;
-}
 
 .redPiece, .blackPiece {
     width: 50px;
@@ -50,5 +48,9 @@ td {
 }
 
 #active {
-    box-shadow: 0 0 10px 5px blue;
+    box-shadow: 0 0 10px 5px rgb(60, 190, 199);
+}
+
+.game-message-wrapper {
+    display: none;
 }
