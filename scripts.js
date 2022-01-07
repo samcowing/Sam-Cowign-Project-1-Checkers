@@ -1,5 +1,6 @@
 const table = document.querySelectorAll('table')
 const start = document.querySelector('#start')
+const reset = document.querySelector('#reset')
 const squares = document.querySelectorAll('td.inPlay')
 bPieces = document.querySelectorAll('.blackPiece')
 const bClass = document.querySelectorAll('.blackPiece')
@@ -20,9 +21,17 @@ let winner = false
 let jumpAvailable = false
 let kingTestR = false
 let kingTestL = false
+//let bKingsC = 0
+//let rKingsC = 0
 
 
 start.addEventListener("click", switchTurn) 
+
+reset.onclick = reloadPage;
+
+function reloadPage() {
+   window.location.reload();
+}
 
 switchTurn()
 
@@ -344,6 +353,7 @@ function switchTurn() {
     rPieces = document.querySelectorAll('.redPiece')
     bCount = bPieces.length
     rCount = rPieces.length
+    //kingCount()
     updateDisplay()
     clearActive(bPieces)
     clearGlow(bPieces)
@@ -365,9 +375,15 @@ function winCondition1() {
     winTest = true
     if (bPieces.length === 0) {
         console.log("RED WON OUTRIGHT")
+        pLost = "Player 1"
+        pWon = "Player 2"
+        gameOver()
     }
     if (rPieces.length === 0) {
         console.log("BLACK WON OUTRIGHT")
+        pLost = "Player 2"
+        pWon = "Player 1"
+        gameOver()
     }
     if (turn === true)
         for (let i = 0; i < rPieces.length; i++) {
@@ -407,6 +423,15 @@ function isSpaceAvailable() {
 function winCondition2(pieces) {
     if (isSpaceAvailable() <= 0) {
         console.log(pieces + " has lost")
+        if (turn === true) {
+            pLost = "Player 2"
+            pWon = "Player 1"
+            gameOver()
+        } else {
+            pLost = "Player 1"
+            pWon = "Player 2"
+            gameOver()
+        }
     }
     jumpL = false
     jumpR = false
@@ -415,15 +440,42 @@ function winCondition2(pieces) {
 }
 
 function updateDisplay() {
-    //playerWins.innerText = pWins
+    //playerWins.innerText = pWon
     //playerLost.innerText = pLost
     bPiecesLeft.innerText = bCount
     rPiecesLeft.innerText = rCount
-    //bKings.innerText = bKCount
-    //rKings.innerText = rKCount
+    //bKings.innerText = bKingsC
+    //rKings.innerText = rKingsC
     bPiecesGained.innerText = 12 - rCount
     rPiecesGained.innerText = 12 - bCount
 }
+
+function gameOver() {
+    playerWins.innerText = pWon + " Won!"
+    playerLost.innerText = pLost
+    alertMessage()
+}
+
+function alertMessage() {
+    //event.preventDefault()
+    alert("Congrats " + pWon + " you have won! Please reset the game to play again.")
+}
+
+/*
+function kingCount() {
+    if (turn === true) {
+        for (let i = 0; i < rPieces.length; i++) {
+            rKingsC = rPieces[i].classList.contains("king").length
+            //rKingsC = rPieces.classList.contains("king").length
+        }
+    } else {
+        for (let i = 0; i < bPieces.length; i++) {
+            bPieces[i].classList.contains("king").length
+            console.log(bPieces[i].classList.contains("king").length)
+        }
+    }
+    //console.log(bPieces[i].classList.contains("king").length)
+}*/
 
 /*
 function checkDoubleJump() {
