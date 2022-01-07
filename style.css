@@ -1,27 +1,39 @@
-header {
-    padding: 1em;
-}
-
-nav {
-    display: flex;
-    justify-content: space-between;
-}
-
-nav button {
+button {
     padding: .3em 1em;
     border: 0;
     border-radius: 5px;
+    margin-right: 10px;
+}
+
+main {
+    display: flex;
+    margin: 2em;
+}
+
+div {
+    margin: 1em;
 }
 
 table {
+    border: 20px ridge hsl(29, 45%, 33%);
 }
 
 td {
     background-color: rgb(148, 130, 109);
-    width: 75px;
-    height: 75px;
+    min-width: 70px;
+    height: 70px;
     text-align: left;
-    border: 2px solid gray
+    border: 2px solid gray;
+    margin: auto;
+}
+
+.container {
+    display: flexbox;
+}
+
+.gameInfo {
+    background-color: rgba(209, 236, 240, 0.801);
+    color: rgb(50, 51, 51);
 }
 
 .null {
@@ -30,27 +42,36 @@ td {
 
 
 .redPiece, .blackPiece {
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     display: block;
-    margin-left: 12px;
     text-align: center;
-    color: white;
+    font-size: 35px;
+    color: rgb(167, 164, 164);
+    margin-left: 5px;
 }
 
 .redPiece {
-    background-color: rgb(129, 26, 26);
+    background-color: rgb(172, 56, 56);
+    border: 10px double rgb(129, 26, 26);
+    color: rgb(204, 151, 151);
 }
 
 .blackPiece {
-    background-color: rgb(2, 2, 2);
+    background-color: rgb(58, 57, 57);
+    border: 10px double rgb(2, 2, 2);
+    color: rgb(167, 164, 164);
 }
 
 #active {
     box-shadow: 0 0 10px 5px rgb(60, 190, 199);
 }
 
-.game-message-wrapper {
-    display: none;
+.backText {
+    color: black;
+}
+
+.redText {
+    color: rgb(129, 26, 26);
 }

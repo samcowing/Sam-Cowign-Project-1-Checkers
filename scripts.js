@@ -4,6 +4,14 @@ const squares = document.querySelectorAll('td.inPlay')
 bPieces = document.querySelectorAll('.blackPiece')
 const bClass = document.querySelectorAll('.blackPiece')
 rPieces = document.querySelectorAll('.redPiece')
+const playerWins = document.querySelector('#winner')
+const playerLost = document.querySelector('#loser')
+const bPiecesLeft = document.querySelector('#bPiecesLeft')
+const rPiecesLeft = document.querySelector('#rPiecesLeft')
+const bKings = document.querySelector('#bKings')
+const rKings = document.querySelector('#rKings')
+const bPiecesGained = document.querySelector('#bPiecesGained')
+const rPiecesGained = document.querySelector('#rPiecesGained')
 let turn = true
 let jumpR = false
 let jumpL = false
@@ -171,34 +179,34 @@ function availableSpots(x, ya, yb, xb) {
                 } else { 
                     let arr = []
                     arr.push(i)
-                    squares[i].style.border = "2px solid blue"
-                    isTheseSpace(player)      
+                    squares[i].style.border = "0px solid blue"
+                    isSpaceAvailable()      
                 }
             } else if ((squares[i].childElementCount === 1) && (squares[i].firstChild.className !== player)) {
                 if ((squares[i].cellIndex === ya) && (kingTestL === false) && (squares[i].parentElement.rowIndex === xb)) {
                     let enemyX = squares[i].parentElement.rowIndex
                     let enemyY = squares[i].cellIndex
                     enemyLK = squares[i]
-                    console.log(enemyLK.firstChild.id + " king left")
+                    //console.log(enemyLK.firstChild.id + " king left")
                     jumpSpotLeft(null, enemyY, piece, enemyX, enemyLK.firstChild.id)
                 } else if ((squares[i].cellIndex === yb) && (kingTestR === false) && (squares[i].parentElement.rowIndex === xb))  {
                     let enemy2X = squares[i].parentElement.rowIndex
                     let enemy2Y = squares[i].cellIndex
                     enemyRK = squares[i]
-                    console.log(enemyRK.firstChild.id + " king right")
+                    //console.log(enemyRK.firstChild.id + " king right")
                     jumpSpotRight(null, enemy2Y, piece, enemy2X, enemyRK.firstChild.id)
                 }
                 if ((squares[i].cellIndex === ya) && (jumpL === false) && (squares[i].parentElement.rowIndex === x)) {
                     let enemyX = squares[i].parentElement.rowIndex
                     let enemyY = squares[i].cellIndex
                     enemyL = squares[i]
-                    console.log(enemyL.firstChild.id+ " left")
+                    //console.log(enemyL.firstChild.id+ " left")
                     jumpSpotLeft(enemyX, enemyY, piece, null, enemyL.firstChild.id)
                 } else if ((squares[i].cellIndex === yb) && (jumpR === false) && (squares[i].parentElement.rowIndex === x))  {
                     let enemy2X = squares[i].parentElement.rowIndex
                     let enemy2Y = squares[i].cellIndex
                     enemyR = squares[i]
-                    console.log(enemyR.firstChild.id + " right")
+                    //console.log(enemyR.firstChild.id + " right")
                     jumpSpotRight(enemy2X, enemy2Y, piece, null, enemyR.firstChild.id)
                 }
             } else { jump = false}
@@ -244,7 +252,6 @@ function squareAction(evt) {
                 enemyR.firstChild.classList.remove("blackPiece")
                 enemyR.firstChild.classList.add("removed")
                 enemyR.removeChild(enemyR.childNodes[0])
-                console.log("remove enemy 2 log")
                 jumpR = false
                 jumpL = false
                 kingTestL = false
@@ -254,7 +261,6 @@ function squareAction(evt) {
                 enemyLK.firstChild.classList.remove("blackPiece")
                 enemyLK.firstChild.classList.add("removed")
                 enemyLK.removeChild(enemyLK.childNodes[0])
-                console.log("remove enemy 2 log")
                 jumpR = false
                 jumpL = false
                 kingTestL = false
@@ -269,7 +275,6 @@ function squareAction(evt) {
                 enemyL.firstChild.classList.remove("blackPiece")
                 enemyL.firstChild.classList.add("removed")
                 enemyL.removeChild(enemyL.childNodes[0])
-                console.log("remove enemy 3 log")
                 jumpR = false
                 jumpL = false
                 kingTestL = false
@@ -279,7 +284,6 @@ function squareAction(evt) {
                 enemyRK.firstChild.classList.remove("blackPiece")
                 enemyRK.firstChild.classList.add("removed")
                 enemyRK.removeChild(enemyRK.childNodes[0])
-                console.log("remove enemy 3 log")
                 jumpR = false
                 jumpL = false
                 kingTestL = false
@@ -292,7 +296,6 @@ function squareAction(evt) {
                 enemyR.firstChild.classList.remove("blackPiece")
                 enemyR.firstChild.classList.add("removed")
                 enemyR.removeChild(enemyR.childNodes[0])
-                console.log("remove enemy 4 log")
                 jumpR = false
                 jumpL = false
             } else {
@@ -300,7 +303,6 @@ function squareAction(evt) {
                 enemyLK.firstChild.classList.remove("blackPiece")
                 enemyLK.firstChild.classList.add("removed")
                 enemyLK.removeChild(enemyLK.childNodes[0])
-                console.log("remove enemy 3 log")
                 jumpR = false
                 jumpL = false
                 kingTestL = false
@@ -323,7 +325,6 @@ function makeKing(pieces) {
     if (turn === true){
         if ((pieces.parentElement.parentElement.rowIndex === 7) && (winTest === false)) {
             pieces.classList.add("king")
-            console.log('made a red king')
             pieces.innerText = "K"
             switchTurn()
         }
@@ -331,7 +332,6 @@ function makeKing(pieces) {
     } else {
         if ((pieces.parentElement.parentElement.rowIndex === 0) && (winTest === false)) {
             pieces.classList.add("king")
-            console.log('made a black king')
             pieces.innerText = "K"
             switchTurn()
         }
@@ -342,6 +342,9 @@ function makeKing(pieces) {
 function switchTurn() {
     bPieces = document.querySelectorAll('.blackPiece')
     rPieces = document.querySelectorAll('.redPiece')
+    bCount = bPieces.length
+    rCount = rPieces.length
+    updateDisplay()
     clearActive(bPieces)
     clearGlow(bPieces)
     clearActive(rPieces)
@@ -383,13 +386,14 @@ function winCondition1() {
             spotChoices(x, y, p)
         }
     } 
+    winCondition2(player)
     playerTurn()
 }
 
-function isTheseSpace(pieces) {
+function isSpaceAvailable() {
     let spaceCount = 0
     for (let i = 0; i < 32; i++) {
-        if (squares[i].style.border === "2px solid blue") {
+        if (squares[i].style.border === "0px solid blue") {
             spaceCount += 1
         }
     }
@@ -397,17 +401,28 @@ function isTheseSpace(pieces) {
     jumpR = false
     kingTestL = false
     kingTestR = false
-    winCondition2(spaceCount, pieces)
+    return spaceCount
 }
 
-function winCondition2(spacesCount, pieces) {
-    if (spacesCount <= 0) {
+function winCondition2(pieces) {
+    if (isSpaceAvailable() <= 0) {
         console.log(pieces + " has lost")
     }
     jumpL = false
     jumpR = false
     kingTestL = false
     kingTestR = false
+}
+
+function updateDisplay() {
+    //playerWins.innerText = pWins
+    //playerLost.innerText = pLost
+    bPiecesLeft.innerText = bCount
+    rPiecesLeft.innerText = rCount
+    //bKings.innerText = bKCount
+    //rKings.innerText = rKCount
+    bPiecesGained.innerText = 12 - rCount
+    rPiecesGained.innerText = 12 - bCount
 }
 
 /*

@@ -9,58 +9,51 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    <header>
-      <nav>
-        <button id=start>Start Game</button>
-      </nav>
-    </header> 
-    <main class="container">
-        <div class="game-message-wrapper"><h1 id="msgContent" class="heading-display">(Make a selection)</h1></div>
-        <div class="game-message-wrapper"><h3>Player 1 Moves: <span id=p1Wins></span></h3></div>
-        <div class="game-message-wrapper"><h3>Player 2 Moves: <span id=p2Wins></span></h3></div>
+    <main>
+      <div class="container"></div>
         <table>
             <tr>
                 <td class=null></td>
-                <td class=inPlay><span class=redPiece id=1 id="active">1</span></td>
+                <td class=inPlay><span class=redPiece id=1></span></td>
                 <td class="null"></td>
-                <td class=inPlay><span class=redPiece id=2>2</span></td>
+                <td class=inPlay><span class=redPiece id=2></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=redPiece id=3>3</span></td>
+                <td class=inPlay><span class=redPiece id=3></span></td>
                 <td class="null"></td>
-                <td class=inPlay><span class=redPiece id=4>4</span></td>
+                <td class=inPlay><span class=redPiece id=4></span></td>
             </tr>
             <tr>
-                <td class=inPlay><span class=redPiece id=5>5</span></td>
+                <td class=inPlay><span class=redPiece id=5></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=redPiece id=6>6</span></td>
+                <td class=inPlay><span class=redPiece id=6></span></td>
                 <td class="null"></td>
-                <td class=inPlay><span class=redPiece id=7>7</span></td>
+                <td class=inPlay><span class=redPiece id=7></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=redPiece id=8>8</span></td>
-                <td class="null"></td>
-            </tr>
-            <tr>
-                <td class=null></td>
-                <td class=inPlay><span class=redPiece id=9>9</span></td>
-                <td class="null"></td>
-                <td class=inPlay><span class=redPiece id=10>10</span></td>
-                <td class=null></td>
-                <td class=inPlay><span class="redPiece king" id=11>K11</span></td>
-                <td class="null"></td>
-                <td class=inPlay><span class=redPiece id=12>12</span></td>
-            </tr>
-            <tr>
-                <td class=inPlay></td>
-                <td class=null></td>
-                <td class=inPlay></td>
-                <td class="null"></td>
-                <td class=inPlay></td>
-                <td class=null></td>
-                <td class=inPlay></td>
+                <td class=inPlay><span class=redPiece id=8></span></td>
                 <td class="null"></td>
             </tr>
             <tr>
                 <td class=null></td>
+                <td class=inPlay><span class=redPiece id=9></span></td>
+                <td class="null"></td>
+                <td class=inPlay><span class=redPiece id=10></span></td>
+                <td class=null></td>
+                <td class=inPlay><span class=redPiece id=11></span></td>
+                <td class="null"></td>
+                <td class=inPlay><span class=redPiece id=12></span></td>
+            </tr>
+            <tr>
+                <td class=inPlay></td>
+                <td class=null></td>
+                <td class=inPlay></td>
+                <td class="null"></td>
+                <td class=inPlay></td>
+                <td class=null></td>
+                <td class=inPlay></td>
+                <td class="null"></td>
+            </tr>
+            <tr>
+                <td class=null></td>
                 <td class=inPlay></td>
                 <td class="null"></td>
                 <td class=inPlay></td>
@@ -70,36 +63,51 @@
                 <td class=inPlay></td>
             </tr>
             <tr>
-                <td class=inPlay><span class=blackPiece id=13>13</span></td>
+                <td class=inPlay><span class=blackPiece id=13></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=blackPiece id=14>14</span></td>
+                <td class=inPlay><span class=blackPiece id=14></span></td>
                 <td class="null"></td>
-                <td class=inPlay><span class=blackPiece id=15>15</span></td>
+                <td class=inPlay><span class=blackPiece id=15></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=blackPiece id=16>16</span></td>
+                <td class=inPlay><span class=blackPiece id=16></span></td>
                 <td class="null"></td>
             </tr>
             <tr>
                 <td class=null></td>
-                <td class=inPlay><span class=blackPiece id=17>17</span></td>
+                <td class=inPlay><span class=blackPiece id=17></span></td>
                 <td class="null"></td>
-                <td class=inPlay><span class=blackPiece id=18>18</span></td>
+                <td class=inPlay><span class=blackPiece id=18></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=blackPiece id=19>19</span></td>
+                <td class=inPlay><span class=blackPiece id=19></span></td>
                 <td class="null"></td>
-                <td class=inPlay><span class=blackPiece id=20>20</span></td>
+                <td class=inPlay><span class=blackPiece id=20></span></td>
             </tr>
             <tr>
-                <td class=inPlay><span class=blackPiece id=21>21</span></td>
+                <td class=inPlay><span class=blackPiece id=21></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=blackPiece id=22>22</span></td>
+                <td class=inPlay><span class=blackPiece id=22></span></td>
                 <td class="null"></td>
-                <td class=inPlay><span class=blackPiece id=23>23</span></td>
+                <td class=inPlay><span class=blackPiece id=23></span></td>
                 <td class=null></td>
-                <td class=inPlay><span class=blackPiece id=24>24</span></td>
+                <td class=inPlay><span class=blackPiece id=24></span></td>
                 <td class="null"></td>
             </tr>
         </table>
+      </div>
+      <div class="container gameInfo">
+        <div><button id=start>Start Game</button><button id=start>Reset Game</button></div>
+        <div class="game-message-wrapper"><h1 id="msgContent" class="heading-display">Sam's Checker Game</h1></div>
+        <div class="game-message-wrapper"><h3>Player 1: <span class=blackText>Black</span></h3></div>
+        <div class="game-message-wrapper"><p>Pieces left: <span id=bPiecesLeft></span></p></div>
+        <div class="game-message-wrapper"><p>Kings: <span id=bKings></span></p></div>
+        <div class="game-message-wrapper"><p>Player 2 pieces gained: <span id=bPiecesGained></span></p></div>
+        <div class="game-message-wrapper"><h3>Player 2: <span class=redText>Red</span></h3></div>
+        <div class="game-message-wrapper"><p>Pieces left: <span id=rPiecesLeft></span></p></div>
+        <div class="game-message-wrapper"><p>Kings: <span id=rKings></span></p></div>
+        <div class="game-message-wrapper"><p>Player 1 pieces gained: <span id=rPiecesGained></span></p></div>
+        <div class="game-message-wrapper"><p><span id=winner></span></p></div>
+        <div class="game-message-wrapper"><p><span id=loser></span></p></div>
+      </div>
     </main>
   </body>
 </html>
