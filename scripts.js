@@ -32,6 +32,8 @@ let jumpL = false
 let test = true
 let winner = false
 let jumpAvailable = false
+let kingTestR = false
+let kingTestL = false
 //let winTest = false
 // 1
 start.addEventListener("click", switchTurn) 
@@ -43,10 +45,8 @@ switchTurn()
 
 function testIds(classTest) {
     for (let i = 0; i < 12; i++) {
-        console.log(classTest[i].id)
     }
 }
-//console.log(testIds(bClass))
 
 function playerTurn() {
     winTest = false
@@ -62,21 +62,18 @@ function playerTurn() {
         }
     }
 }
-// 4
+
 function clearGlow(pieces) {
     for (let i = 0; i < pieces.length; i++) {
         pieces[i].style.boxShadow = null
-        //console.log(squares[i].style)
     }
-    //console.log("4")
 } 
 
 function clearActive(pieces) {
     for (let i = 0; i < pieces.length; i++) {
         pieces[i].removeEventListener("click", clickHandler)
-        //console.log(squares[i].style)
+        //put jump clears here??
     }
-    //console.log("4")
 } 
 
 function clearSquares(squares) {
@@ -89,8 +86,11 @@ function clearSquares(squares) {
 //console.log(checkActive(bPieces))
 // 5
 function clickHandler(evt) {
+    bPieces = document.querySelectorAll('.blackPiece')
+    rPieces = document.querySelectorAll('.redPiece')
     clearSquares(squares)
     piece = evt.target
+    //console.log(piece.className)
     if (piece.style.boxShadow === "rgb(60, 190, 199) 0px 0px 10px 5px") {
         clearGlow(bPieces) 
         clearGlow(rPieces)
@@ -100,65 +100,104 @@ function clickHandler(evt) {
         clearGlow(rPieces)
         piece.style.boxShadow = "0 0 10px 5px rgb(60, 190, 199)"
     }
-    //clearActive(bPieces)
-    child = piece
     parent = piece.parentElement
-    spotChoices(parent.parentElement.rowIndex, parent.cellIndex)
-    //winCondition1()
+    spotChoices(parent.parentElement.rowIndex, parent.cellIndex, piece)
 }   
 
-// new
-function spotChoices(x, y) {
-    let spot1 = []
-    let spot2 = []
+function spotChoices(x, y, pieces) {
     if (turn === true) {  
         y1 = y + 1
         x1 = x + 1
         y2 = y - 1
-    } else {
+        if (pieces.classList.contains("king")) {
+            x2 = x - 1
+        } else {
+            x2 = null
+        }
+    } 
+    if (turn === false) {
         y1 = y - 1
         x1 = x - 1
         y2 = y + 1
+        if (pieces.classList.contains("king")) {
+            x2 = x + 1
+        } else {
+            x2 = null
+
+        }
     }
-    spot1.push(x1, y1)
-    //console.log(spot1)
-    spot2.push(x1, y2)
-    //console.log(spot2)
-    availableSpots(x1, y1, y2)
+    availableSpots(x1, y1, y2, x2)
 }
 
-function jumpSpotRight(x, y) {
+function jumpSpotRight(x, y, pieces, xb, square) {
     let spotR = []
     if (turn === true) {  
-        x1 = x + 1
-        y2 = y - 1
-    } else {
-        x1 = x - 1
-        y2 = y + 1
+        if (pieces.classList.contains("king") && (kingTestR === false) && (x === null)) {
+            x2 = xb - 1
+            y2 = y - 1
+            //console.log(square + " red king right action")
+            kingTestR = true
+            availableSpots(null, null, y2, x2)
+        } else {
+            x1 = x + 1
+            y2 = y - 1
+            //console.log(square + " red right action")
+            jumpR = true
+            availableSpots(x1, null, y2, null)
+        }
+    } 
+    if (turn === false) {
+        if (pieces.classList.contains("king") && (kingTestR === false)  && (x === null)) {
+            x2 = xb + 1
+            y2 = y + 1
+            kingTestR = true
+            availableSpots(null, null, y2, x2)
+        } else {
+            x1 = x - 1
+            y2 = y + 1
+            jumpR = true
+            availableSpots(x1, null, y2, null)
+            
+        }
     }
-    console.log("end of left right fnct")
-    jumpR = true
-    availableSpots(x1, null, y2)
+    availableSpots(x1, null, y2, x2)
 }
 
-function jumpSpotLeft(x, y) {
+function jumpSpotLeft(x, y, pieces, xb, square) {
     let spotL = []
     if (turn === true) {  
-        x1 = x + 1
-        y1 = y + 1
+        if (pieces.classList.contains("king") && (kingTestL === false) && (x === null)) {
+            x2 = xb - 1
+            y1 = y + 1
+            console.log(square + " red king left action")
+            kingTestL = true
+            availableSpots(null, y1, null, x2)
+        } else {
+            x1 = x + 1
+            y1 = y + 1
+            console.log(square + " red left action")
+            jumpL = true
+            availableSpots(x1, y1, null, null)
+        }
     } else {
-        x1 = x - 1
-        y1 = y - 1
-
+        if (pieces.classList.contains("king") && (kingTestL === false) && (x === null)) {
+            x2 = xb + 1
+            y1 = y - 1
+            kingTestL = true
+            availableSpots(null, y1, null, x2)
+        } else {
+            x1 = x - 1
+            y1 = y - 1
+            jumpL = true
+            availableSpots(x1, y1, null, null)
+        }
     }
-    jumpL = true
-    console.log("end of left jump fnct")
-    availableSpots(x1, y1, null)
+    //console.log("end of left jump fnct")
 }
 // 7
-function availableSpots(x, ya, yb) {
+function availableSpots(x, ya, yb, xb) {
     for (let i = 0; i < 32; i++) {
-        if (squares[i].parentElement.rowIndex === x && (squares[i].cellIndex === ya || squares[i].cellIndex === yb)) {
+        if ((squares[i].parentElement.rowIndex === x || squares[i].parentElement.rowIndex === xb) && (squares[i].cellIndex === ya || squares[i].cellIndex === yb)) {
             if (squares[i].childElementCount === 0) {
                 if ((winTest === false) && (jumpL === false) && (jumpR === false)) {
                     squares[i].style.border = "2px solid red"
@@ -171,19 +210,36 @@ function availableSpots(x, ya, yb) {
                     let arr = []
                     arr.push(i)
                     squares[i].style.border = "2px solid blue"
-                    winCondition2(arr.length)        
+                    isTheseSpace(player)
+                    //winCondition2(arr.length)        
                 }
             } else if ((squares[i].childElementCount === 1) && (squares[i].firstChild.className !== player)) {
-                if ((squares[i].cellIndex === ya) && (jumpL === false)) {
+                if ((squares[i].cellIndex === ya) && (kingTestL === false) && (squares[i].parentElement.rowIndex === xb)) {
+                    let enemyX = squares[i].parentElement.rowIndex
+                    let enemyY = squares[i].cellIndex
+                    enemyLK = squares[i]
+                    //kingTestL = true
+                    console.log(enemyLK.firstChild.id + " king left")
+                    jumpSpotLeft(null, enemyY, piece, enemyX, enemyLK.firstChild.id)
+                } else if ((squares[i].cellIndex === yb) && (kingTestR === false) && (squares[i].parentElement.rowIndex === xb))  {
+                    let enemy2X = squares[i].parentElement.rowIndex
+                    let enemy2Y = squares[i].cellIndex
+                    enemyRK = squares[i]
+                    console.log(enemyRK.firstChild.id + " king right")
+                    jumpSpotRight(null, enemy2Y, piece, enemy2X, enemyRK.firstChild.id)
+                }
+                if ((squares[i].cellIndex === ya) && (jumpL === false) && (squares[i].parentElement.rowIndex === x)) {
                     let enemyX = squares[i].parentElement.rowIndex
                     let enemyY = squares[i].cellIndex
                     enemyL = squares[i]
-                    jumpSpotLeft(enemyX, enemyY)
-                } else if (squares[i].cellIndex === yb && (jumpR === false))  {
+                    console.log(enemyL.firstChild.id+ " left")
+                    jumpSpotLeft(enemyX, enemyY, piece, null, enemyL.firstChild.id)
+                } else if ((squares[i].cellIndex === yb) && (jumpR === false) && (squares[i].parentElement.rowIndex === x))  {
                     let enemy2X = squares[i].parentElement.rowIndex
                     let enemy2Y = squares[i].cellIndex
                     enemyR = squares[i]
-                    jumpSpotRight(enemy2X, enemy2Y)
+                    console.log(enemyR.firstChild.id + " right")
+                    jumpSpotRight(enemy2X, enemy2Y, piece, null, enemyR.firstChild.id)
                 }
             } else { jump = false}
         } 
@@ -192,45 +248,107 @@ function availableSpots(x, ya, yb) {
 
 function squareAction(evt) {
     squareAvailable = evt.target
-    console.log(squareAvailable.cellIndex)
+    //console.log(squareAvailable.cellIndex)
     //console.log("square clicked")
-    parent.removeChild(child);
-    console.log(parent.cellIndex)
-    squareAvailable.appendChild(child)
+    parent.removeChild(piece);
+    ///console.log(parent.cellIndex)
+    squareAvailable.appendChild(piece)
     if (parent.cellIndex === (squareAvailable.cellIndex + 1) || parent.cellIndex === (squareAvailable.cellIndex - 1)) {
         jumpR = false
         jumpL = false
+        kingTestL = false
+        kingTestR = false
     }
-    if (turn === true) {
-        if ((jumpL === true) && (parent.cellIndex < squareAvailable.cellIndex)) {
-            enemyL.firstChild.classList.remove("redPiece")
-            enemyL.firstChild.classList.remove("blackPiece")
-            enemyL.removeChild(enemyL.childNodes[0])
-            jumpR = false
-            jumpL = false
+    if (((turn === true) && (parent.parentElement.rowIndex < squareAvailable.parentElement.rowIndex)) || ((turn === false) && (parent.parentElement.rowIndex < squareAvailable.parentElement.rowIndex))) {
+        if (((jumpL === true) || (kingTestR === true)) && (parent.cellIndex < squareAvailable.cellIndex)) {
+            if (turn === true) {
+                enemyL.firstChild.classList.remove("redPiece")
+                enemyL.firstChild.classList.remove("blackPiece")
+                enemyL.firstChild.classList.add("removed")
+                enemyL.removeChild(enemyL.childNodes[0])
+                jumpR = false
+                jumpL = false
+                kingTestL = false
+                kingTestR = false
+            } else {
+                enemyRK.firstChild.classList.remove("redPiece")
+                enemyRK.firstChild.classList.remove("blackPiece")
+                enemyRK.firstChild.classList.add("removed")
+                enemyRK.removeChild(enemyRK.childNodes[0])
+                jumpR = false
+                jumpL = false
+                kingTestL = false
+                kingTestR = false
+            }
         }
-        if ((jumpR === true) && (parent.cellIndex > squareAvailable.cellIndex)) {
-            enemyR.firstChild.classList.remove("redPiece")
-            enemyR.firstChild.classList.remove("blackPiece")
-            enemyR.removeChild(enemyR.childNodes[0])
-            jumpR = false
-            jumpL = false
+        if (((jumpR === true) || (kingTestL === true)) && (parent.cellIndex > squareAvailable.cellIndex)) {
+            if (turn === true) {
+                enemyR.firstChild.classList.remove("redPiece")
+                enemyR.firstChild.classList.remove("blackPiece")
+                enemyR.firstChild.classList.add("removed")
+                enemyR.removeChild(enemyR.childNodes[0])
+                console.log("remove enemy 2 log")
+                jumpR = false
+                jumpL = false
+                kingTestL = false
+                kingTestR = false
+            } else {
+                enemyLK.firstChild.classList.remove("redPiece")
+                enemyLK.firstChild.classList.remove("blackPiece")
+                enemyLK.firstChild.classList.add("removed")
+                enemyLK.removeChild(enemyLK.childNodes[0])
+                console.log("remove enemy 2 log")
+                jumpR = false
+                jumpL = false
+                kingTestL = false
+                kingTestR = false
+            }
         }
     } 
-    if (turn !== true) {
-        if ((jumpL === true) && (parent.cellIndex > squareAvailable.cellIndex)) {
-            enemyL.firstChild.classList.remove("redPiece")
-            enemyL.firstChild.classList.remove("blackPiece")
-            enemyL.removeChild(enemyL.childNodes[0])
-            jumpR = false
-            jumpL = false
+    if (((turn === false) && (parent.parentElement.rowIndex > squareAvailable.parentElement.rowIndex)) || ((turn === true) && (parent.parentElement.rowIndex > squareAvailable.parentElement.rowIndex))) {
+        if (((jumpL === true) || (kingTestR === true)) && (parent.cellIndex > squareAvailable.cellIndex)) {
+            if (turn === false) {
+                enemyL.firstChild.classList.remove("redPiece")
+                enemyL.firstChild.classList.remove("blackPiece")
+                enemyL.firstChild.classList.add("removed")
+                enemyL.removeChild(enemyL.childNodes[0])
+                console.log("remove enemy 3 log")
+                jumpR = false
+                jumpL = false
+                kingTestL = false
+                kingTestR = false
+            } else {
+                enemyRK.firstChild.classList.remove("redPiece")
+                enemyRK.firstChild.classList.remove("blackPiece")
+                enemyRK.firstChild.classList.add("removed")
+                enemyRK.removeChild(enemyRK.childNodes[0])
+                console.log("remove enemy 3 log")
+                jumpR = false
+                jumpL = false
+                kingTestL = false
+                kingTestR = false
+            }
         }
-        if ((jumpR === true) && (parent.cellIndex < squareAvailable.cellIndex)) {
-            enemyR.firstChild.classList.remove("redPiece")
-            enemyR.firstChild.classList.remove("blackPiece")
-            enemyR.removeChild(enemyR.childNodes[0])
-            jumpR = false
-            jumpL = false
+        if (((jumpR === true) || (kingTestL === true)) && (parent.cellIndex < squareAvailable.cellIndex)) {
+            if (turn === false) {
+                enemyR.firstChild.classList.remove("redPiece")
+                enemyR.firstChild.classList.remove("blackPiece")
+                enemyR.firstChild.classList.add("removed")
+                enemyR.removeChild(enemyR.childNodes[0])
+                console.log("remove enemy 4 log")
+                jumpR = false
+                jumpL = false
+            } else {
+                enemyLK.firstChild.classList.remove("redPiece")
+                enemyLK.firstChild.classList.remove("blackPiece")
+                enemyLK.firstChild.classList.add("removed")
+                enemyLK.removeChild(enemyLK.childNodes[0])
+                console.log("remove enemy 3 log")
+                jumpR = false
+                jumpL = false
+                kingTestL = false
+                kingTestR = false
+            }
         }
     } 
     //checkDoubleJump()
@@ -243,7 +361,8 @@ function endTurn() {
         squares[i].style.border = "2px solid gray"
         squares[i].removeEventListener("click", squareAction)
     }
-    switchTurn()
+    makeKing(piece)
+    //switchTurn()
 }
 
 //console.log("Done?")
@@ -253,7 +372,7 @@ function endTurn() {
 function switchTurn() {
     bPieces = document.querySelectorAll('.blackPiece')
     rPieces = document.querySelectorAll('.redPiece')
-    console.log(bPieces.length)
+    //console.log(bPieces.length)
     clearActive(bPieces)
     clearGlow(bPieces)
     clearActive(rPieces)
@@ -272,6 +391,8 @@ function switchTurn() {
 }
 
 function winCondition1() {
+    bPieces = document.querySelectorAll('.blackPiece')
+    rPieces = document.querySelectorAll('.redPiece')
     winTest = true
     if (bPieces.length === 0) {
         console.log("RED WON OUTRIGHT")
@@ -282,33 +403,77 @@ function winCondition1() {
      // 2. Player has no more moves
     if (turn === true)
         for (let i = 0; i < rPieces.length; i++) {
-            console.log(rPieces[i])
+            bPieces = document.querySelectorAll('.blackPiece')
+            rPieces = document.querySelectorAll('.redPiece')
             let x = rPieces[i].parentElement.parentElement.rowIndex 
             let y = rPieces[i].parentElement.cellIndex 
-            spotChoices(x, y)
+            let p = rPieces[i]
+            //console.log(x + " x")
+            //console.log(y + " y")
+            //console.log(p + " p")
+            spotChoices(x, y, p)
     } else {
         for (let i = 0; i < bPieces.length; i++) {
-            console.log(bPieces[i])
+            bPieces = document.querySelectorAll('.blackPiece')
             let x = bPieces[i].parentElement.parentElement.rowIndex 
             let y = bPieces[i].parentElement.cellIndex 
-            spotChoices(x, y)
+            let p = bPieces[i]
+            //console.log(x + " x")
+            //console.log(y + " y")
+            //console.log(p + " p")
+            spotChoices(x, y, p)
         }
     } 
     //spotChoices(x, y)
-    winCondition2()
+    //winCondition2()
+    //isTheseSpace(player)
     playerTurn()
 }
 
-function winCondition2(spacesLeft) {
-    console.log(spacesLeft)
-    if (spacesLeft === 0) {
-        console.log("Player has won")
-    } else {
-        console.log('no winner yet')
+function isTheseSpace(pieces) {
+    let spaceCount = 0
+    for (let i = 0; i < 32; i++) {
+        //let spaceCount = []
+        if (squares[i].style.border === "2px solid blue") {
+            spaceCount += 1
+        }
+    }
+    jumpL = false
+    jumpR = false
+    kingTestL = false
+    kingTestR = false
+    winCondition2(spaceCount, pieces)
+}
+
+function winCondition2(spacesCount, pieces) {
+    if (spacesCount <= 0) {
+        console.log(pieces + " has lost")
     }
     ///winTest = false
     jumpL = false
     jumpR = false
+    kingTestL = false
+    kingTestR = false
+}
+
+function makeKing(pieces) {
+    if (turn === true){
+        if ((pieces.parentElement.parentElement.rowIndex === 7) && (winTest === false)) {
+            pieces.classList.add("king")
+            console.log('made a red king')
+            pieces.innerText = "K"
+            switchTurn()
+        }
+        else {switchTurn()}
+    } else {
+        if ((pieces.parentElement.parentElement.rowIndex === 0) && (winTest === false)) {
+            pieces.classList.add("king")
+            console.log('made a black king')
+            pieces.innerText = "K"
+            switchTurn()
+        }
+        else {switchTurn()}
+    } 
 }
 
 /*
@@ -338,3 +503,4 @@ function checkDoubleJump() {
 }
 //switchTurn()
 */
+
