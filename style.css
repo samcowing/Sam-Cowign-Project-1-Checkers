@@ -8,11 +8,11 @@ button {
 
 main {
     display: flex;
-    margin: 2em;
+    margin: 1em;
 }
 
 div {
-    margin: 1em;
+    margin: 1.5em;
 }
 
 table {
@@ -69,14 +69,6 @@ td {
     box-shadow: 0 0 10px 5px rgb(60, 190, 199);
 }
 
-.backText {
-    color: black;
-}
-
-.redText {
-    color: rgb(129, 26, 26);
-}
-
 #start {
     display: none;
 }
@@ -87,4 +79,16 @@ td {
 
 #loser {
     display: none;;
+}
+
+.gameText {
+    margin: 0;
+}
+
+#backText {
+    color: rgb(0, 0, 0);
+}
+
+.redText {
+    color: rgb(129, 26, 26);
 }

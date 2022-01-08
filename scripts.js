@@ -1,6 +1,9 @@
 const table = document.querySelectorAll('table')
 const start = document.querySelector('#start')
 const reset = document.querySelector('#reset')
+const gameInfo = document.querySelector('.gameInfo')
+const gameText = document.querySelector('.gameText')
+const blackText = document.querySelector('#blackText')
 const squares = document.querySelectorAll('td.inPlay')
 bPieces = document.querySelectorAll('.blackPiece')
 const bClass = document.querySelectorAll('.blackPiece')
@@ -224,6 +227,7 @@ function availableSpots(x, ya, yb, xb) {
 }
 
 function squareAction(evt) {
+    moveCount()
     squareAvailable = evt.target
     parent.removeChild(piece);
     squareAvailable.appendChild(piece)
@@ -440,12 +444,8 @@ function winCondition2(pieces) {
 }
 
 function updateDisplay() {
-    //playerWins.innerText = pWon
-    //playerLost.innerText = pLost
     bPiecesLeft.innerText = bCount
     rPiecesLeft.innerText = rCount
-    //bKings.innerText = bKingsC
-    //rKings.innerText = rKingsC
     bPiecesGained.innerText = 12 - rCount
     rPiecesGained.innerText = 12 - bCount
 }
@@ -453,29 +453,19 @@ function updateDisplay() {
 function gameOver() {
     playerWins.innerText = pWon + " Won!"
     playerLost.innerText = pLost
-    alertMessage()
+    gameInfo.style.backgroundColor = "rgba(240, 221, 209, 0.801)"
+    gameText.style.color = "gray"
+    blackText.style.color = "black"
+    //alertMessage()
 }
 
 function alertMessage() {
-    //event.preventDefault()
     alert("Congrats " + pWon + " you have won! Please reset the game to play again.")
 }
 
-/*
-function kingCount() {
-    if (turn === true) {
-        for (let i = 0; i < rPieces.length; i++) {
-            rKingsC = rPieces[i].classList.contains("king").length
-            //rKingsC = rPieces.classList.contains("king").length
-        }
-    } else {
-        for (let i = 0; i < bPieces.length; i++) {
-            bPieces[i].classList.contains("king").length
-            console.log(bPieces[i].classList.contains("king").length)
-        }
-    }
-    //console.log(bPieces[i].classList.contains("king").length)
-}*/
+function moveCount() {
+
+}
 
 /*
 function checkDoubleJump() {
