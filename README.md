@@ -54,7 +54,9 @@ Typically, they are flat and round. The color of one set is black and the other 
 -- Wins are determined by checking if any pieces with the players class are present or by the check for available spots at the beginning of each turn. If there are no spots available, that player loses. 
 
 4. Future features
+- clean up JS
 - Double Jumps
+- Putting in your player name
 - Saving previous game wins/losses
 - Mobile friendly
 - Dark or light modes
