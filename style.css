@@ -51,6 +51,7 @@ td {
     font-size: 35px;
     color: rgb(167, 164, 164);
     margin-left: 5px;
+    user-select: none;
 }
 
 .redPiece {
