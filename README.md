@@ -56,6 +56,8 @@ Typically, they are flat and round. The color of one set is black and the other 
 4. Future features
 - Double Jumps
 - Saving previous game wins/losses
+- Mobile friendly
+- Dark or light modes
 
 5. Credits
 Thank you to my General Assembly classmates, especially the fellow checkers game creators, and an expecially big thanks to our class instructor Joshua, who I may have been stuck at just moving the pieces without. 
