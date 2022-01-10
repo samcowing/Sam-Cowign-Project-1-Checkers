@@ -53,6 +53,11 @@ function playerTurn() {
 
 function clearGlow(pieces) {
     for (let i = 0; i < pieces.length; i++) {
+        jumpR = false
+        jumpL = false
+        kingTestL = false
+        kingTestR = false
+        pieces[i].removeEventLi
         pieces[i].style.boxShadow = null
     }
 } 

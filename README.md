@@ -54,8 +54,13 @@ Typically, they are flat and round. The color of one set is black and the other 
 -- Wins are determined by checking if any pieces with the players class are present or by the check for available spots at the beginning of each turn. If there are no spots available, that player loses. 
 
 4. Future features
+- clean up JS
 - Double Jumps
+- Putting in your player name
 - Saving previous game wins/losses
+- Mobile friendly
+- Dark or light modes
+- Modal for ending game instead of alert
 
 5. Credits
 Thank you to my General Assembly classmates, especially the fellow checkers game creators, and an expecially big thanks to our class instructor Joshua, who I may have been stuck at just moving the pieces without. 
